@@ -1,24 +1,28 @@
+
 const walletBalanceElement = document.getElementById('wallet-balance');
+const totalSpentElement = document.getElementById('total-spent');
 const transactionForm = document.getElementById('transaction-form');
 const transactionHistory = document.getElementById('transaction-history');
-const resetButton = document.createElement('button');
+const resetButton = document.getElementById('reset-btn');
 
 let walletBalance = 0;
+let totalSpent = 0;
 let transactions = [];
-
-// Add Reset Button
-resetButton.textContent = "Reset by Date";
-resetButton.className = "reset-btn";
-document.querySelector('.container').appendChild(resetButton);
 
 // Load data from localStorage on page load
 window.addEventListener('load', () => {
     const savedBalance = localStorage.getItem('walletBalance');
+    const savedSpent = localStorage.getItem('totalSpent');
     const savedTransactions = localStorage.getItem('transactions');
 
     if (savedBalance) {
         walletBalance = parseFloat(savedBalance);
         walletBalanceElement.textContent = walletBalance.toFixed(2);
+    }
+
+    if (savedSpent) {
+        totalSpent = parseFloat(savedSpent);
+        totalSpentElement.textContent = `Total Spent: ₹${totalSpent.toFixed(2)}`;
     }
 
     if (savedTransactions) {
@@ -39,14 +43,16 @@ transactionForm.addEventListener('submit', (e) => {
     const today = new Date();
     const date = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
 
-    // Update wallet balance
+    // Update wallet balance and total spent
     if (type === 'add') {
         walletBalance += amount;
     } else if (type === 'spend') {
         walletBalance -= amount;
+        totalSpent += amount; // Add to total spent
     }
 
     walletBalanceElement.textContent = walletBalance.toFixed(2);
+    totalSpentElement.textContent = `Total Spent: ₹${totalSpent.toFixed(2)}`;
 
     // Save transaction to the history
     const transaction = { amount, type, note, date };
@@ -71,39 +77,47 @@ function addTransactionToHistory(transaction) {
 // Function to save data to localStorage
 function saveDataToLocalStorage() {
     localStorage.setItem('walletBalance', walletBalance.toFixed(2));
+    localStorage.setItem('totalSpent', totalSpent.toFixed(2));
     localStorage.setItem('transactions', JSON.stringify(transactions));
 }
 
-// Function to reset data by date
+// Function to reset all data
 resetButton.addEventListener('click', () => {
-    const dateToReset = prompt("Enter the date to reset (dd/mm/yyyy):");
+    if (confirm("Are you sure you want to reset all data? This action cannot be undone.")) {
+        walletBalance = 0;
+        totalSpent = 0;
+        transactions = [];
 
-    if (dateToReset) {
-        // Filter out transactions for the given date
-        const filteredTransactions = transactions.filter(t => t.date !== dateToReset);
-        const removedTransactions = transactions.filter(t => t.date === dateToReset);
-
-        // Update wallet balance
-        removedTransactions.forEach(transaction => {
-            if (transaction.type === 'add') {
-                walletBalance -= transaction.amount;
-            } else if (transaction.type === 'spend') {
-                walletBalance += transaction.amount;
-            }
-        });
-
-        transactions = filteredTransactions;
-
-        // Update UI
-        transactionHistory.innerHTML = '';
-        transactions.forEach(addTransactionToHistory);
         walletBalanceElement.textContent = walletBalance.toFixed(2);
+        totalSpentElement.textContent = "Total Spent: ₹0.00";
+        transactionHistory.innerHTML = '';
 
-        // Update localStorage
-        saveDataToLocalStorage();
+        localStorage.removeItem('walletBalance');
+        localStorage.removeItem('totalSpent');
+        localStorage.removeItem('transactions');
 
-        alert(`Transactions for ${dateToReset} have been reset.`);
-    } else {
-        alert("No date entered. Reset canceled.");
+        alert("All data has been reset.");
+    }
+});
+
+// DOM Elements
+const transactionPopup = document.getElementById("transaction-popup");
+const viewHistoryBtn = document.getElementById("view-history-btn");
+const closePopup = document.getElementById("close-popup");
+
+// Show the popup
+viewHistoryBtn.addEventListener("click", () => {
+    transactionPopup.style.display = "flex";
+});
+
+// Close the popup
+closePopup.addEventListener("click", () => {
+    transactionPopup.style.display = "none";
+});
+
+// Close the popup when clicking outside the content
+window.addEventListener("click", (event) => {
+    if (event.target === transactionPopup) {
+        transactionPopup.style.display = "none";
     }
 });
