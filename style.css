@@ -29,9 +29,9 @@ body {
     transition: transform 0.2s ease;
 }
 
-.container:hover {
+/* .container:hover {
     transform: scale(1.01);
-}
+} */
 
 /* Header */
 h1 {
@@ -284,3 +284,45 @@ button:hover {
     background-color: #732d91;
     box-shadow: 0 4px 10px rgba(142, 68, 173, 0.4);
 }
+
+
+/* Add these styles to your existing CSS */
+
+/* Toast Notification */
+/* .toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none;
+    z-index: 1001;
+} */
+
+
+/* Login Link */
+.login-link {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Popup Backdrop Blur */
+.popup {
+    backdrop-filter: blur(5px);
+}
+
+/* Button Icons */
+button i {
+    margin-left: 5px;
+}
+
+
+
+
+
