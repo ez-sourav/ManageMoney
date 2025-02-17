@@ -1,0 +1,328 @@
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom right, #eef2f3, #d6e4f0);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+/* .container:hover {
+    transform: scale(1.01);
+} */
+
+/* Header */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: black;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: #27ae60;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+p#total-spent {
+    font-size: 1.2rem;
+    color: #e74c3c;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Transaction Form */
+form {
+    text-align: left;
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    color: black;
+    font-weight: bold;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+    box-shadow: 0 4px 10px rgba(41, 128, 185, 0.4);
+}
+
+/* Reset Button */
+#reset-btn {
+    background-color: #e74c3c;
+    margin-top: 15px;
+}
+
+#reset-btn:hover {
+    background-color: #c0392b;
+    box-shadow: 0 4px 10px rgba(192, 57, 43, 0.4);
+}
+
+/* History Section */
+.history-section {
+    margin-top: 20px;
+}
+
+.history-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: black;
+    font-weight: bold;
+    text-align: left;
+}
+
+#transaction-history {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+#transaction-history li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+#transaction-history li:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add {
+    border-left-color: #27ae60;
+    color: #27ae60;
+}
+
+.spend {
+    border-left-color: #e74c3c;
+    color: #e74c3c;
+}
+
+/* Responsive Design */
+
+/* Medium screens (tablets) */
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    p#total-spent {
+        font-size: 1.1rem;
+    }
+}
+
+/* Small screens (mobile) */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    p#total-spent {
+        font-size: 1rem;
+    }
+
+    label {
+        font-size: 0.9rem;
+    }
+
+    input, select, button {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+
+    #transaction-history li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #transaction-history li span {
+        margin-top: 5px;
+        font-size: 0.9rem;
+        color: #555;
+    }
+}
+
+/* Popup Modal Styles */
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: #fff;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80%;
+    overflow-y: auto; /* Scrollable for long content */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #e74c3c;
+}
+
+/* View History Button */
+.view-history-btn {
+    background-color: #8e44ad;
+    color: white;
+    font-weight: bold;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+    padding: 12px 15px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.view-history-btn:hover {
+    background-color: #732d91;
+    box-shadow: 0 4px 10px rgba(142, 68, 173, 0.4);
+}
+
+
+/* Add these styles to your existing CSS */
+
+/* Toast Notification */
+/* .toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none;
+    z-index: 1001;
+} */
+
+
+/* Login Link */
+.login-link {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Popup Backdrop Blur */
+.popup {
+    backdrop-filter: blur(5px);
+}
+
+/* Button Icons */
+button i {
+    margin-left: 5px;
+}
+
+
+
+
+
